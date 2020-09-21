@@ -17,6 +17,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -207,8 +208,10 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
                     mCameraFrame[1] = new JavaCameraFrame(mFrameChain[1], mFrameWidth, mFrameHeight);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
-                        mCamera.setPreviewTexture(mSurfaceTexture);
+//                        mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
+//                        mCamera.setPreviewTexture(mSurfaceTexture);
+                        setDisplayOrientation(mCamera, 90);
+                        mCamera.setPreviewDisplay(getHolder());
                     } else
                        mCamera.setPreviewDisplay(null);
 
@@ -225,6 +228,20 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
         }
 
         return result;
+    }
+
+    protected void setDisplayOrientation(Camera camera, int angle){
+        Method downPolymorphic;
+        try
+        {
+            downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", new Class[] { int.class });
+            if (downPolymorphic != null)
+                downPolymorphic.invoke(camera, new Object[] { angle });
+        }
+        catch (Exception e1)
+        {
+            e1.printStackTrace();
+        }
     }
 
     protected void releaseCamera() {
