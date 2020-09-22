@@ -1,7 +1,9 @@
 package org.opencv.android;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.ImageFormat;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
@@ -33,6 +35,8 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
     private static final int MAGIC_TEXTURE_ID = 10;
     private static final String TAG = "JavaCameraView";
+    private final Matrix mMatrix = new Matrix();
+
 
     private byte mBuffer[];
     private Mat[] mFrameChain;
@@ -208,10 +212,8 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
                     mCameraFrame[1] = new JavaCameraFrame(mFrameChain[1], mFrameWidth, mFrameHeight);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                          setDisplayOrientation(mCamera, 90);
                           mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
                           mCamera.setPreviewTexture(mSurfaceTexture);
-//                        mCamera.setPreviewDisplay(getHolder());
                     } else
                        mCamera.setPreviewDisplay(null);
 
