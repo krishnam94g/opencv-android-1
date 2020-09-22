@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -381,6 +382,50 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
         if (mCacheBitmap != null) {
             mCacheBitmap.recycle();
         }
+    }
+
+    private void updateMatrix() {
+        float mw = this.getWidth();
+        float mh = this.getHeight();
+
+        float hw = this.getWidth() / 2.0f;
+        float hh = this.getHeight() / 2.0f;
+
+        float cw  = (float)Resources.getSystem().getDisplayMetrics().widthPixels; //Make sure to import Resources package
+        float ch  = (float)Resources.getSystem().getDisplayMetrics().heightPixels;
+
+        float scale = cw / (float)mh;
+        float scale2 = ch / (float)mw;
+        if(scale2 > scale){
+            scale = scale2;
+        }
+
+        boolean isFrontCamera = mCameraIndex == CAMERA_ID_FRONT;
+
+        mMatrix.reset();
+        if (isFrontCamera) {
+            mMatrix.preScale(-1, 1, hw, hh); //MH - this will mirror the camera
+        }
+        mMatrix.preTranslate(hw, hh);
+        if (isFrontCamera){
+            mMatrix.preRotate(270);
+        } else {
+            mMatrix.preRotate(90);
+        }
+        mMatrix.preTranslate(-hw, -hh);
+        mMatrix.preScale(scale,scale,hw,hh);
+    }
+
+    @Override
+    public void layout(int l, int t, int r, int b) {
+        super.layout(l, t, r, b);
+        updateMatrix();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        updateMatrix();
     }
 
     /**
