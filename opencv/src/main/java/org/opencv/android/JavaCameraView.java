@@ -33,6 +33,8 @@ import java.util.List;
  */
 public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallback {
 
+
+
     private static final int MAGIC_TEXTURE_ID = 10;
     private static final String TAG = "JavaCameraView";
     private final Matrix mMatrix = new Matrix();
