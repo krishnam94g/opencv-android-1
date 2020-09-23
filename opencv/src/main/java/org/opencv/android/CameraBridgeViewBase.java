@@ -541,7 +541,8 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
                 }
             }
         }
+        return new Size(1080, 1920);
 
-        return new Size(calcWidth, calcHeight);
+//        return new Size(calcWidth, calcHeight);
     }
 }
