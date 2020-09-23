@@ -368,7 +368,7 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
             ad.setMessage("It seems that you device does not support camera (or it is locked). Application will be closed.");
             ad.setButton(DialogInterface.BUTTON_NEUTRAL,  "OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    diaLog.dismiss();
+                    dialog.dismiss();
                     ((Activity) getContext()).finish();
                 }
             });
