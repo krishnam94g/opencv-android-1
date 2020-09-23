@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.content.res.Resources;
+import android.graphics.Matrix;
 
 import com.github.ramonrabello.opencv.android.BuildConfig;
 import com.github.ramonrabello.opencv.android.R;
