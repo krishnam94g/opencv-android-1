@@ -14,6 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.content.res.Resources;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 
 import com.github.ramonrabello.opencv.android.BuildConfig;
 import com.github.ramonrabello.opencv.android.R;
