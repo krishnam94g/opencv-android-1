@@ -1,9 +1,7 @@
 package org.opencv.android;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.ImageFormat;
-import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
@@ -19,7 +17,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -33,12 +30,8 @@ import java.util.List;
  */
 public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallback {
 
-
-
     private static final int MAGIC_TEXTURE_ID = 10;
     private static final String TAG = "JavaCameraView";
-    private final Matrix mMatrix = new Matrix();
-
 
     private byte mBuffer[];
     private Mat[] mFrameChain;
@@ -214,8 +207,8 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
                     mCameraFrame[1] = new JavaCameraFrame(mFrameChain[1], mFrameWidth, mFrameHeight);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                          mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
-                          mCamera.setPreviewTexture(mSurfaceTexture);
+                        mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
+                        mCamera.setPreviewTexture(mSurfaceTexture);
                     } else
                        mCamera.setPreviewDisplay(null);
 
@@ -232,20 +225,6 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
         }
 
         return result;
-    }
-
-    protected void setDisplayOrientation(Camera camera, int angle){
-        Method downPolymorphic;
-        try
-        {
-            downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", new Class[] { int.class });
-            if (downPolymorphic != null)
-                downPolymorphic.invoke(camera, new Object[] { angle });
-        }
-        catch (Exception e1)
-        {
-            e1.printStackTrace();
-        }
     }
 
     protected void releaseCamera() {
