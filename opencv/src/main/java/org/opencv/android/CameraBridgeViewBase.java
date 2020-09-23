@@ -22,7 +22,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
 import java.util.List;
-
+import android.graphics.Paint;
 /**
  * This is a basic class, implementing the interaction with Camera and OpenCV library.
  * The main responsibility of it - is to control when camera can be enabled, process the frame,
@@ -384,66 +384,66 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
         }
     }
 
-    private void updateMatrix() {
-        float mw = this.getWidth();
-        float mh = this.getHeight();
+    // private void updateMatrix() {
+    //     float mw = this.getWidth();
+    //     float mh = this.getHeight();
 
-        Log.d(TAG,"Before updateMatrix: width,height");
-        Log.d(TAG,String.valueOf(mw));
-        Log.d(TAG,String.valueOf(mh));
+    //     Log.d(TAG,"Before updateMatrix: width,height");
+    //     Log.d(TAG,String.valueOf(mw));
+    //     Log.d(TAG,String.valueOf(mh));
 
 
-        float hw = this.getWidth() / 2.0f;
-        float hh = this.getHeight() / 2.0f;
+    //     float hw = this.getWidth() / 2.0f;
+    //     float hh = this.getHeight() / 2.0f;
 
-        float cw  = (float)Resources.getSystem().getDisplayMetrics().widthPixels; //Make sure to import Resources package
-        float ch  = (float)Resources.getSystem().getDisplayMetrics().heightPixels;
+    //     float cw  = (float)Resources.getSystem().getDisplayMetrics().widthPixels; //Make sure to import Resources package
+    //     float ch  = (float)Resources.getSystem().getDisplayMetrics().heightPixels;
 
-        Log.d(TAG,"In pixels: width,height");
-        Log.d(TAG,String.valueOf(cw));
-        Log.d(TAG,String.valueOf(ch));
+    //     Log.d(TAG,"In pixels: width,height");
+    //     Log.d(TAG,String.valueOf(cw));
+    //     Log.d(TAG,String.valueOf(ch));
 
-        float scale = cw / (float)mh;
-        float scale2 = ch / (float)mw;
-        if(scale2 > scale){
-            scale = scale2;
-        }
+    //     float scale = cw / (float)mh;
+    //     float scale2 = ch / (float)mw;
+    //     if(scale2 > scale){
+    //         scale = scale2;
+    //     }
 
-        Log.d(TAG,"Scale");
-        Log.d(TAG,String.valueOf(scale));
-        Log.d(TAG,String.valueOf(scale2));
+    //     Log.d(TAG,"Scale");
+    //     Log.d(TAG,String.valueOf(scale));
+    //     Log.d(TAG,String.valueOf(scale2));
 
-        boolean isFrontCamera = mCameraIndex == CAMERA_ID_FRONT;
+    //     boolean isFrontCamera = mCameraIndex == CAMERA_ID_FRONT;
 
-        mMatrix.reset();
-        if (isFrontCamera) {
-            mMatrix.preScale(-1, 1, hw, hh); //MH - this will mirror the camera
-        }
-        mMatrix.preTranslate(hw, hh);
-        if (isFrontCamera){
-            mMatrix.preRotate(270);
-        } else {
-            mMatrix.preRotate(90);
-        }
-        mMatrix.preTranslate(-hw, -hh);
-        mMatrix.preScale(scale,scale,hw,hh);
-    }
+    //     mMatrix.reset();
+    //     if (isFrontCamera) {
+    //         mMatrix.preScale(-1, 1, hw, hh); //MH - this will mirror the camera
+    //     }
+    //     mMatrix.preTranslate(hw, hh);
+    //     if (isFrontCamera){
+    //         mMatrix.preRotate(270);
+    //     } else {
+    //         mMatrix.preRotate(90);
+    //     }
+    //     mMatrix.preTranslate(-hw, -hh);
+    //     mMatrix.preScale(scale,scale,hw,hh);
+    // }
 
-    @Override
-    public void layout(int l, int t, int r, int b) {
-        super.layout(l, t, r, b);
-        updateMatrix();
-    }
+    // @Override
+    // public void layout(int l, int t, int r, int b) {
+    //     super.layout(l, t, r, b);
+    //     updateMatrix();
+    // }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.d(TAG,"measure spec width,height");
-        Log.d(TAG,String.valueOf(widthMeasureSpec));
-        Log.d(TAG,String.valueOf(heightMeasureSpec));
+    // @Override
+    // protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    //     Log.d(TAG,"measure spec width,height");
+    //     Log.d(TAG,String.valueOf(widthMeasureSpec));
+    //     Log.d(TAG,String.valueOf(heightMeasureSpec));
 
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        updateMatrix();
-    }
+    //     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    //     updateMatrix();
+    // }
 
     /**
      * This method shall be called by the subclasses when they have valid
@@ -483,8 +483,10 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
                 matrix.postScale(scale, scale, canvas.getWidth()/2 , canvas.getHeight()/2 );
                 canvas.drawBitmap(mCacheBitmap, matrix, new Paint());
 
-                int saveCount = canvas.save();
-                canvas.setMatrix(mMatrix);
+                // int saveCount = canvas.save();
+                // canvas.setMatrix(mMatrix);
+                if (BuildConfig.DEBUG)	
+                    Log.d(TAG, "mStretch value: " + mScale);
 
                 if (mScale != 0) {
                     canvas.drawBitmap(mCacheBitmap, new Rect(0,0,mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),
