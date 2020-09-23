@@ -477,12 +477,12 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
             if (canvas != null) {
                 canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
 
-                Matrix matrix = new Matrix(); // I rotate it with minimal process
-                matrix.preTranslate((canvas.getWidth() - mCacheBitmap.getWidth()) / 2,(canvas.getHeight() - mCacheBitmap.getHeight()) / 2);
-                matrix.postRotate(90f,(canvas.getWidth()) / 2,(canvas.getHeight()) / 2);
-                float scale = (float) canvas.getWidth() / (float) mCacheBitmap.getHeight();
-                matrix.postScale(scale, scale, canvas.getWidth()/2 , canvas.getHeight()/2 );
-                canvas.drawBitmap(mCacheBitmap, matrix, new Paint());
+                // Matrix matrix = new Matrix(); // I rotate it with minimal process
+                // matrix.preTranslate((canvas.getWidth() - mCacheBitmap.getWidth()) / 2,(canvas.getHeight() - mCacheBitmap.getHeight()) / 2);
+                // matrix.postRotate(90f,(canvas.getWidth()) / 2,(canvas.getHeight()) / 2);
+                // float scale = (float) canvas.getWidth() / (float) mCacheBitmap.getHeight();
+                // matrix.postScale(scale, scale, canvas.getWidth()/2 , canvas.getHeight()/2 );
+                // canvas.drawBitmap(mCacheBitmap, matrix, new Paint());
 
                 // int saveCount = canvas.save();
                 // canvas.setMatrix(mMatrix);
