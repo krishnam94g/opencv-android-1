@@ -388,17 +388,30 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
         float mw = this.getWidth();
         float mh = this.getHeight();
 
+        Log.d(TAG,"Before updateMatrix: width,height");
+        Log.d(TAG,String.valueOf(mw));
+        Log.d(TAG,String.valueOf(mh));
+
+
         float hw = this.getWidth() / 2.0f;
         float hh = this.getHeight() / 2.0f;
 
         float cw  = (float)Resources.getSystem().getDisplayMetrics().widthPixels; //Make sure to import Resources package
         float ch  = (float)Resources.getSystem().getDisplayMetrics().heightPixels;
 
+        Log.d(TAG,"In pixels: width,height");
+        Log.d(TAG,String.valueOf(cw));
+        Log.d(TAG,String.valueOf(ch));
+
         float scale = cw / (float)mh;
         float scale2 = ch / (float)mw;
         if(scale2 > scale){
             scale = scale2;
         }
+
+        Log.d(TAG,"Scale");
+        Log.d(TAG,String.valueOf(scale));
+        Log.d(TAG,String.valueOf(scale2));
 
         boolean isFrontCamera = mCameraIndex == CAMERA_ID_FRONT;
 
@@ -424,6 +437,10 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.d(TAG,"measure spec width,height");
+        Log.d(TAG,String.valueOf(widthMeasureSpec));
+        Log.d(TAG,String.valueOf(heightMeasureSpec));
+        
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         updateMatrix();
     }
