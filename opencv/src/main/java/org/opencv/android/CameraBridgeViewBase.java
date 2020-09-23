@@ -477,6 +477,18 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
             if (canvas != null) {
                 canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
 
+                canvas.rotate(270, (canvas.getWidth() / 2), (canvas.getHeight() / 2));
+                canvas.scale(1, -1, canvas.getWidth() / 2, canvas.getHeight() / 2);
+
+                Log.d(TAG, "Accelerationn " + canvas.isHardwareAccelerated());
+
+                canvas.drawBitmap(mCacheBitmap, new Rect(0,0, mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),
+                        new Rect((canvas.getWidth() - mCacheBitmap.getWidth()) / 2,
+                                (canvas.getHeight() - mCacheBitmap.getHeight()) / 2,
+                                (canvas.getWidth() - mCacheBitmap.getWidth()) / 2 + mCacheBitmap.getWidth(),
+                                (canvas.getHeight() - mCacheBitmap.getHeight()) / 2 + mCacheBitmap.getHeight()),
+                        null);   
+                        
                 // Matrix matrix = new Matrix(); // I rotate it with minimal process
                 // matrix.preTranslate((canvas.getWidth() - mCacheBitmap.getWidth()) / 2,(canvas.getHeight() - mCacheBitmap.getHeight()) / 2);
                 // matrix.postRotate(90f,(canvas.getWidth()) / 2,(canvas.getHeight()) / 2);
@@ -486,8 +498,8 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
 
                 // int saveCount = canvas.save();
                 // canvas.setMatrix(mMatrix);
-                if (BuildConfig.DEBUG)	
-                    Log.d(TAG, "mStretch value: " + mScale);
+                // if (BuildConfig.DEBUG)	
+                //     Log.d(TAG, "mStretch value: " + mScale);
 
                 // if (mScale != 0) {
                 //     canvas.drawBitmap(mCacheBitmap, new Rect(0,0,mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),
